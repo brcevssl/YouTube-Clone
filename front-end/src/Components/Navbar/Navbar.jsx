@@ -1,5 +1,6 @@
-import PropTypes from 'prop-types';
+import { Link } from 'react-router-dom';
 import "./Navbar.css";
+import PropTypes from 'prop-types';
 import menu_icon from "../../assets/menu.png";
 import logo from "../../assets/logo2.png";
 import search_icon from "../../assets/search.png";
@@ -12,7 +13,7 @@ const Navbar = ({ setSidebar }) => {
     <nav className="flex-div"> 
         <div className="nav-left flex-div">
             <img className="menu-icon" onClick={() => setSidebar(prev => prev === false?true:false)} src={menu_icon} alt="menu" />
-            <img className="logo" src={logo} alt="logo" />
+            <Link to="/"><img className="logo" src={logo} alt="logo" /></Link>
         </div>
         <div className="nav-middle flex-div">
             <div className="search-box flex-div">
