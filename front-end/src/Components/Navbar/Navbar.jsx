@@ -31,7 +31,7 @@ const Navbar = ({ setSidebar }) => {
 
 Navbar.propTypes = {
     setSidebar: PropTypes.func.isRequired
-  };
+};
 
 export default Navbar;
 

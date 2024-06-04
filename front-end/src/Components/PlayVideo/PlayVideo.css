@@ -4,6 +4,7 @@
 
 .play-video video {
     width: 100%;
+    border-radius: 20px;
 }
 
 .play-video h3 {
@@ -116,6 +117,7 @@
 .comment h3 {
     font-size: 14px;
     margin-bottom: 2px;
+    cursor: pointer;
 }
 
 .comment span {

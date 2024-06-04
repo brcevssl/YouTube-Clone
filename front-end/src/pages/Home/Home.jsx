@@ -1,4 +1,4 @@
-import React from 'react';
+import PropTypes from 'prop-types';
 import './Home.css';
 import Sidebar from '../../Components/Sidebar/Sidebar';
 import Feed from '../../Components/Feed/Feed';
@@ -12,6 +12,11 @@ const Home = ({ sidebar }) => {
         </div>
     </>
   )
+};
+
+Home.propTypes = {
+  sidebar: PropTypes.bool,
+  setSidebar: PropTypes.func.isRequired
 };
 
 export default Home;
