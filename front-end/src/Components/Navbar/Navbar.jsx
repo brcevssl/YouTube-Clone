@@ -1,4 +1,4 @@
-import React from "react";
+import PropTypes from 'prop-types';
 import "./Navbar.css";
 import menu_icon from "../../assets/menu.png";
 import logo from "../../assets/logo2.png";
@@ -28,6 +28,10 @@ const Navbar = ({ setSidebar }) => {
     </nav>
     )
 };
+
+Navbar.propTypes = {
+    setSidebar: PropTypes.func.isRequired
+  };
 
 export default Navbar;
 
