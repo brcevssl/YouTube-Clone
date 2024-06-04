@@ -18,10 +18,5 @@ const Home = ({ sidebar }) => {
   )
 };
 
-Home.propTypes = {
-  sidebar: PropTypes.bool,
-  setSidebar: PropTypes.func.isRequired
-};
-
 export default Home;
 

@@ -1,117 +1,59 @@
-import React from 'react';
 import { Link } from 'react-router-dom';
+import { useState, useEffect } from 'react';
 import "./Feed.css";
-import thumbnail1 from "../../assets/thumbnail1.png";
-import thumbnail2 from "../../assets/thumbnail2.png";
-import thumbnail3 from "../../assets/thumbnail3.png";
-import thumbnail4 from "../../assets/thumbnail4.png";
-import thumbnail5 from "../../assets/thumbnail5.png";
-import thumbnail6 from "../../assets/thumbnail6.png";
-import thumbnail7 from "../../assets/thumbnail7.png";
-import thumbnail8 from "../../assets/thumbnail8.png";
+import { API_KEY } from "../../data";
 
 
-const Feed = () => {
+const Feed = ( { category } ) => {
+
+    const [data, setData] = useState([]);
+
+    const fetchData = async () => {
+        const response = await fetch(`https://youtube.googleapis.com/youtube/v3/videos?part=snippet%2CcontentDetails%2Cstatistics&chart=mostPopular&maxResults=48&regionCode=US&videoCategoryId=${category}&key=${API_KEY}`);
+        const data = await response.json();
+        setData(data.items);
+    }
+
+    useEffect(() => {
+        fetchData();
+    }, [category]);
+
+    const getViews = (views) => {
+        if (views > 1000000) {
+            return (views / 1000000).toFixed(1) + 'M';
+        } else if (views > 1000) {
+            return (views / 1000).toFixed(1) + 'K';
+        }
+        return views;
+    }
+
+    const getTime = (time) => {
+        const now = new Date();
+        const timeDiff = now.getTime() - time.getTime();
+        const seconds = Math.ceil(timeDiff / 1000);
+        const minutes = Math.ceil(seconds / 60);
+        const hours = Math.ceil(minutes / 60);
+        const days = Math.ceil(hours / 24);
+        return days + ' days';
+    }
+
   return (
     <div className="feed">
-        <Link to = {`video/20/4521`} className='card'>
-            <img src={thumbnail1} alt="thumbnail1" />
-            <h2>Video title</h2>
-            <h3>Channels name</h3>
-            <p>15k views &bull; 2 days ago</p>
-        </Link>
-        <div className='card'>
-            <img src={thumbnail2} alt="thumbnail2" />
-            <h2>Video title</h2>
-            <h3>Channels name</h3>
-            <p>15k views &bull; 2 days ago</p>
-        </div>
-        <div className='card'>
-            <img src={thumbnail3} alt="thumbnail3" />
-            <h2>Video title</h2>
-            <h3>Channels name</h3>
-            <p>15k views &bull; 2 days ago</p>
-        </div>
-        <div className='card'>
-            <img src={thumbnail4} alt="thumbnail4" />
-            <h2>Video title</h2>
-            <h3>Channels name</h3>
-            <p>15k views &bull; 2 days ago</p>
-        </div>
-        <div className='card'>
-            <img src={thumbnail5} alt="thumbnail5" />
-            <h2>Video title</h2>
-            <h3>Channels name</h3>
-            <p>15k views &bull; 2 days ago</p>
-        </div>
-        <div className='card'>
-            <img src={thumbnail6} alt="thumbnail6" />
-            <h2>Video title</h2>
-            <h3>Channels name</h3>
-            <p>15k views &bull; 2 days ago</p>
-        </div>
-        <div className='card'>
-            <img src={thumbnail7} alt="thumbnail7" />
-            <h2>Video title</h2>
-            <h3>Channels name</h3>
-            <p>15k views &bull; 2 days ago</p>
-        </div>
-        <div className='card'>
-            <img src={thumbnail8} alt="thumbnail8" />
-            <h2>Video title</h2>
-            <h3>Channels name</h3>
-            <p>15k views &bull; 2 days ago</p>
-        </div>
-        <div className='card'>
-            <img src={thumbnail1} alt="thumbnail1" />
-            <h2>Video title</h2>
-            <h3>Channels name</h3>
-            <p>15k views &bull; 2 days ago</p>
-        </div>
-        <div className='card'>
-            <img src={thumbnail2} alt="thumbnail2" />
-            <h2>Video title</h2>
-            <h3>Channels name</h3>
-            <p>15k views &bull; 2 days ago</p>
-        </div>
-        <div className='card'>
-            <img src={thumbnail3} alt="thumbnail3" />
-            <h2>Video title</h2>
-            <h3>Channels name</h3>
-            <p>15k views &bull; 2 days ago</p>
-        </div>
-        <div className='card'>
-            <img src={thumbnail4} alt="thumbnail4" />
-            <h2>Video title</h2>
-            <h3>Channels name</h3>
-            <p>15k views &bull; 2 days ago</p>
-        </div>
-        <div className='card'>
-            <img src={thumbnail5} alt="thumbnail5" />
-            <h2>Video title</h2>
-            <h3>Channels name</h3>
-            <p>15k views &bull; 2 days ago</p>
-        </div>
-        <div className='card'>
-            <img src={thumbnail6} alt="thumbnail6" />
-            <h2>Video title</h2>
-            <h3>Channels name</h3>
-            <p>15k views &bull; 2 days ago</p>
-        </div>
-        <div className='card'>
-            <img src={thumbnail7} alt="thumbnail7" />
-            <h2>Video title</h2>
-            <h3>Channels name</h3>
-            <p>15k views &bull; 2 days ago</p>
-        </div>
-        <div className='card'>
-            <img src={thumbnail8} alt="thumbnail8" />
-            <h2>Video title</h2>
-            <h3>Channels name</h3>
-            <p>15k views &bull; 2 days ago</p>
-        </div>
-    </div>
+        {data.map((item, index) => {
+            const publishedAt = new Date(item.snippet.publishedAt);
+            const views = getViews(item.statistics.viewCount);
+            const time = getTime(publishedAt);
 
+            return (
+                <Link to = {`watch/${item.snippet.categoryId}/${item.id}`} className='card' key={index}>
+                    <img src={item.snippet.thumbnails.medium.url} alt="thumbnail" />
+                    <h2>{item.snippet.title}</h2>
+                    <h3>{item.channelTitle}</h3>
+                    <p>{views} views &bull; {time} ago</p>
+                </Link>
+            )
+        })}
+    </div>
   )
 }
 
