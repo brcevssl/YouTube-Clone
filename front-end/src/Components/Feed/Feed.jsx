@@ -11,7 +11,7 @@ const Feed = ( { category } ) => {
     const [data, setData] = useState([]);
 
     const fetchData = async () => {
-        const response = await fetch(`https://youtube.googleapis.com/youtube/v3/videos?part=snippet%2CcontentDetails%2Cstatistics&chart=mostPopular&maxResults=48&regionCode=US&videoCategoryId=${category}&key=${API_KEY}`);
+        const response = await fetch(`https://youtube.googleapis.com/youtube/v3/videos?part=snippet%2CcontentDetails%2Cstatistics&chart=mostPopular&maxResults=6&regionCode=US&videoCategoryId=${category}&key=${API_KEY}`);
         const data = await response.json();
         setData(data.items);
     }

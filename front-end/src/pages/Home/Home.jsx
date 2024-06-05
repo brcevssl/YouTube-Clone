@@ -1,5 +1,4 @@
 import { useState } from 'react';
-import PropTypes from 'prop-types';
 import './Home.css';
 import Sidebar from '../../Components/Sidebar/Sidebar';
 import Feed from '../../Components/Feed/Feed';

@@ -55,11 +55,11 @@ const PlayVideo = ({ videoId }) => {
             </div>
             <hr />
             <div className='publisher'>
-                <img src={channelData ? channelData.snippet.thumbnails.default.url : null} alt="profile picture" />
+                <img src="{channelData ? channelData.snippet.thumbnails.default.url : null}" alt="profile picture" />
                 <div>
                     <p>{apiData ? apiData.snippet.channelTitle : null}<img src={verified} alt="verified" /></p>
                     <span>
-                        {channelData ? channelData.statistics.subscriberCount : null} Subscribers
+                        {/* {channelData ? channelData.statistics.subscriberCount : null} */} Subscribers
                     </span>
                 </div>
                 <button>Subscribe</button>
